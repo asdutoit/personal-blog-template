@@ -1,0 +1,67 @@
+---
+title: "Interactive Blog Posts with React Components in MDX"
+date: "2024-01-20"
+excerpt: "Discover how to create engaging technical content using React components directly in your MDX blog posts, complete with interactive examples and code demonstrations."
+tags: ["React", "MDX", "Components", "Interactive Content"]
+authors: ["John Doe"]
+readingTime: "12 min read"
+featured: true
+---
+
+## Subtitle
+
+### Custom Hook Example
+
+Here's a custom React hook for fetching data from an API:
+
+```tsx
+import { useState, useEffect } from "react";
+
+interface ApiResponse<T> {
+  data: T | null;
+  loading: boolean;
+  error: string | null;
+}
+
+export function useFetch<T>(url: string): ApiResponse<T> {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        setData(result);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error };
+}
+```
+
+> This hook manages the loading state, error handling, and data fetching logic, making it reusable across different components.
+
+### Table Example
+
+Here's a table showcasing some sample data:
+
+|  left  | center | right |
+| :----: | :----: | :---: |
+|  foo   |  bar   |  baz  |
+| banana | apple  | kiwi  |
